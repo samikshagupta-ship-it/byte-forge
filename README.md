@@ -27,7 +27,7 @@ A cutting-edge web application for anonymous incident reporting with AI-powered 
 - Explore the crime map
 - Check trends and statistics
 
-## Hackathon Winner Material
+## Material
 
 - Innovative AI ethics focus
 - Real-time data visualization
@@ -41,4 +41,5 @@ A cutting-edge web application for anonymous incident reporting with AI-powered 
 - SQLAlchemy
 - Leaflet Maps
 - Bootstrap
+
 - Jinja2 Templates
