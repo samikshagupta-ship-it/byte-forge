@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trends & Statistics - Sentinel AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0a0a0a; color: #00ff00; font-family: 'Orbitron', monospace; animation: fadeIn 1s ease-in; }
+        .navbar { background-color: #0a0a0a !important; border-bottom: 1px solid #00ff00; animation: slideDown 0.5s ease-out; }
+        .navbar-brand, .nav-link { color: #00ff00 !important; transition: color 0.3s; }
+        .navbar-brand:hover, .nav-link:hover { color: #ffffff !important; text-shadow: 0 0 10px #00ff00; }
+        .card { border: 1px solid #00ff00; background-color: #1a1a1a; color: #00ff00; transition: transform 0.3s, box-shadow 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); }
+        .stat-number { font-size: 2rem; color: #ff4500; }
+        .chart { background: #2a2a2a; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sentinel AI</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/submit">Submit Report</a>
+                <a class="nav-link" href="/reports">View Reports</a>
+                <a class="nav-link" href="/map">Crime Map</a>
+                <a class="nav-link" href="/trends">Trends</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2>Global Trends & Statistics</h2>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Suicide Rates Worldwide (per 100,000)</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" style="background: #1a1a1a; color: #00ff00; border: 1px solid #00ff00;">Guyana: 30.2</li>
+                            <li class="list-group-item" style="background: #1a1a1a; color: #00ff00; border: 1px solid #00ff00;">Lesotho: 28.9</li>
+                            <li class="list-group-item" style="background: #1a1a1a; color: #00ff00; border: 1px solid #00ff00;">Eswatini: 27.9</li>
+                            <li class="list-group-item" style="background: #1a1a1a; color: #00ff00; border: 1px solid #00ff00;">Kiribati: 27.5</li>
+                            <li class="list-group-item" style="background: #1a1a1a; color: #00ff00; border: 1px solid #00ff00;">Micronesia: 27.2</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Mental Health Awareness</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Sentinel AI promotes ethical reporting and predictive safety measures to prevent incidents.</p>
+                        <div class="stat-number">AI-Powered</div>
+                        <p>Credibility Analysis</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart">
+            <h4>Crime Categories Distribution</h4>
+            <p>Interactive visualization of reported incidents by category.</p>
+            <!-- Placeholder for chart -->
+            <div style="height: 200px; background: linear-gradient(45deg, #00ff00, #ff4500); border-radius: 10px;"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

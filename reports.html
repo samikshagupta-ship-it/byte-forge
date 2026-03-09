@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Reports - Sentinel AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #0a0a0a; color: #00ff00; font-family: 'Orbitron', monospace; animation: fadeIn 1s ease-in; }
+        .table th { background-color: #1a1a1a; color: #00ff00; border: 1px solid #00ff00; }
+        .table td { border: 1px solid #00ff00; background-color: #2a2a2a; color: #00ff00; transition: background-color 0.3s; }
+        .table tr:hover td { background-color: #3a3a3a; }
+        .navbar { background-color: #0a0a0a !important; border-bottom: 1px solid #00ff00; animation: slideDown 0.5s ease-out; }
+        .navbar-brand, .nav-link { color: #00ff00 !important; transition: color 0.3s; }
+        .navbar-brand:hover, .nav-link:hover { color: #ffffff !important; text-shadow: 0 0 10px #00ff00; }
+        .btn-primary { background-color: #00ff00; border-color: #00ff00; color: #000; transition: all 0.3s; }
+        .btn-primary:hover { background-color: #33ff33; border-color: #33ff33; box-shadow: 0 0 15px #00ff00; transform: scale(1.05); }
+        .btn-primary:active { transform: scale(0.95); }
+        .text-success { color: #00ff00 !important; }
+        .text-warning { color: #ffff00 !important; }
+        .text-danger { color: #ff0000 !important; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sentinel AI</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/submit">Submit Report</a>
+                <a class="nav-link" href="/reports">View Reports</a>
+                <a class="nav-link" href="/map">Crime Map</a>
+                <a class="nav-link" href="/trends">Trends</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2>All Reports</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>Category</th>
+                    <th>Credibility Score</th>
+                    <th>Status</th>
+                    <th>Submitted At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr>
+                    <td>{{ report.token }}</td>
+                    <td>{{ report.category }}</td>
+                    <td>
+                        <span class="{% if report.credibility_score >= 70 %}text-success{% elif report.credibility_score >= 40 %}text-warning{% else %}text-danger{% endif %}">
+                            {{ report.credibility_score }}/100
+                        </span>
+                    </td>
+                    <td>{{ report.status }}</td>
+                    <td>{{ report.created_at }}</td>
+                    <td><a href="/report/{{ report.token }}" class="btn btn-sm btn-primary">View Details</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

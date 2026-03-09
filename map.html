@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Map - Sentinel AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; padding: 0; background: #0a0a0a; color: #00ff00; font-family: 'Orbitron', monospace; overflow: hidden; }
+        #map { height: 100vh; width: 100%; animation: fadeIn 1s ease-in; }
+        .navbar { background: #1a1a1a !important; border-bottom: 1px solid #00ff00; animation: slideDown 0.5s ease-out; }
+        .navbar-brand, .nav-link { color: #00ff00 !important; transition: color 0.3s; }
+        .navbar-brand:hover, .nav-link:hover { color: #ffffff !important; text-shadow: 0 0 10px #00ff00; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+        .leaflet-popup-content-wrapper { background: #1a1a1a; color: #00ff00; border: 1px solid #00ff00; font-family: 'Orbitron', monospace; }
+        .leaflet-popup-tip { background: #1a1a1a; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Sentinel AI</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/submit">Submit Report</a>
+                <a class="nav-link" href="/reports">View Reports</a>
+                <a class="nav-link" href="/map">Crime Map</a>
+                <a class="nav-link" href="/trends">Trends</a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([21.1458, 79.0882], 12); // Nagpur
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var reports = {{ reports_json|safe }};
+
+        reports.forEach(function(report) {
+            if (report.lat && report.lng) {
+                var color = 'red';
+                if (report.credibility_score >= 70) color = 'green';
+                else if (report.credibility_score >= 40) color = 'orange';
+                
+                var icon = L.divIcon({
+                    className: 'custom-marker',
+                    html: '<div style="background-color:' + color + '; width:20px; height:20px; border-radius:50%; border:2px solid #fff; box-shadow: 0 0 10px ' + color + ';"></div>',
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                });
+                
+                var marker = L.marker([parseFloat(report.lat), parseFloat(report.lng)], {icon: icon}).addTo(map);
+                marker.bindPopup('<b>' + report.category + '</b><br>' + report.description + '<br><span style="color:' + color + ';">Score: ' + report.credibility_score + '/100</span>');
+            }
+        });
+
+        // Fit map to markers if any
+        if (reports.length > 0) {
+            var group = new L.featureGroup();
+            reports.forEach(function(report) {
+                if (report.lat && report.lng) {
+                    group.addLayer(L.marker([parseFloat(report.lat), parseFloat(report.lng)]));
+                }
+            });
+            map.fitBounds(group.getBounds());
+        } else {
+            // If no reports, stay on Nagpur
+        }
+
+        // Add Nagpur locations
+        var nagpurLocations = [
+            {name: 'Nandanvan', lat: 21.1234, lng: 79.0543},
+            {name: 'Mominpura', lat: 21.1458, lng: 79.0882},
+            {name: 'Sitabuldi', lat: 21.1523, lng: 79.0821},
+            {name: 'Dharampeth', lat: 21.1412, lng: 79.0654}
+        ];
+
+        nagpurLocations.forEach(function(loc) {
+            var marker = L.marker([loc.lat, loc.lng]).addTo(map);
+            marker.bindPopup('<b>' + loc.name + '</b><br>Nagpur Location');
+        });
+    </script>
+</body>
+</html>
